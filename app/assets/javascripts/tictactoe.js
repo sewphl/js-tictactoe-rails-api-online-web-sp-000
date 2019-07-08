@@ -1,7 +1,7 @@
 // Code your JavaScript / jQuery solution here
 
-let turn = 0;
-let currentGame = false;
+var turn = 0;
+var currentGame = false;
 const wins = [
   [0, 1, 2],
   [3, 4, 5],
@@ -16,6 +16,18 @@ const wins = [
 $(document).ready(function() {
   attachListeners();
 });
+
+function attachListeners() {
+  $('td').on('click', function() {
+    if (!$.text(this) && !checkWinner()) {
+      doTurn(this);
+    }
+  });
+
+  $('button#save').on('click', saveGame);
+  $('button#previous').on('click', previousGames);
+  $('button#clear').on('click', clearGame);
+}
 
 function player() {
   return (turn % 2 === 0 ? 'X' : 'O');
@@ -99,20 +111,4 @@ function saveGame() {
       currentGame = game['data']['id'];
     });
   }
-}
-
-
-function attachListeners() {
-  //$('td').on('click', function() {
-  //  doTurn(this);
-  //});
-  $('td').on('click', function() {
-    if (!$.text(this) && !checkWinner()) {
-      doTurn(this);
-    }
-  });
-
-  $('button#save').on('click', saveGame);
-  $('button#previous').on('click', previousGames);
-  $('button#clear').on('click', clearGame);
 }
